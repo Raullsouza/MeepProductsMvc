@@ -57,44 +57,23 @@ namespace MeepProductsMvc.Services
                 }
                 return produtoVM;
             }
-
         }
-        public async Task<IEnumerable<ProdutoViewModel>> PostProdutosEmOutraApi()
-        {
-            var client = _clientFactory.CreateClient("OmieProducts");
-            var produtos = await GetProdutos();
-            var produtosPostados = new List<ProdutoViewModel>();
-
-            foreach (var produto in produtos)
-            {
-                var conteudo = new StringContent(JsonSerializer.Serialize(produto), Encoding.UTF8, "application/json");
-                var response = await client.PostAsync(apiEndpointOmie, conteudo); 
-
-                if(response.IsSuccessStatusCode)
-                {
-                    var produtoPostados = await response.Content.ReadFromJsonAsync<ProdutoViewModel>(_options);
-                    produtosPostados.Add(produtoPostados);
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            return produtosPostados;
-        }
+         
         public async Task<ProdutoOmie> PostOmie(ProdutoOmie produtoOmie)
         {
             var client = _clientFactory.CreateClient("OmieProducts");
-            var produto = JsonSerializer.Serialize(produtoOmie);
+            var produto = JsonSerializer.Serialize(produtoOmie);          
             StringContent content = new StringContent(produto, Encoding.UTF8, "application/json");
+
+
             HttpResponseMessage response = await client.PostAsync(apiEndpointOmie, content);
             {
                 if (response.IsSuccessStatusCode)
                 {
                     var apiResponse = await response.Content.ReadAsStreamAsync();
                     produtoOmie = await JsonSerializer
-                        .DeserializeAsync<ProdutoOmie>
-                        (apiResponse, _options);
+                          .DeserializeAsync<ProdutoOmie>
+                          (apiResponse, _options);
                 }
                 else
                 {
@@ -102,13 +81,14 @@ namespace MeepProductsMvc.Services
                 }
                 return produtoOmie;
             }
+            
         }
 
         public async Task<ProdutoViewModel?> CriaProduto(ProdutoViewModel produtoVM)
         {
             var client = _clientFactory.CreateClient("MeepProducts");
             var produto = JsonSerializer.Serialize(produtoVM);
-            StringContent content = new StringContent(produto, Encoding.UTF8, "application/json");
+            StringContent content = new(produto, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PostAsync(apiEndpointMeep, content);
             {
                 if (response.IsSuccessStatusCode)
@@ -157,5 +137,6 @@ namespace MeepProductsMvc.Services
                 }
             }
         }
+
     }
 }

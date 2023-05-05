@@ -29,3 +29,5 @@ C:\Users\raul.souza\Documents\Projetos\MeepProductsMvc\MeepProductsMvc\obj\Debug
 C:\Users\raul.souza\Documents\Projetos\MeepProductsMvc\MeepProductsMvc\obj\Debug\net6.0\MeepProductsMvc.pdb
 C:\Users\raul.souza\Documents\Projetos\MeepProductsMvc\MeepProductsMvc\obj\Debug\net6.0\MeepProductsMvc.genruntimeconfig.cache
 C:\Users\raul.souza\Documents\Projetos\MeepProductsMvc\MeepProductsMvc\obj\Debug\net6.0\ref\MeepProductsMvc.dll
+C:\Users\raul.souza\Documents\Projetos\MeepProductsMvc\MeepProductsMvc\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\raul.souza\Documents\Projetos\MeepProductsMvc\MeepProductsMvc\obj\Debug\net6.0\MeepProductsMvc.csproj.CopyComplete

@@ -1,6 +1,9 @@
 ﻿using MeepProductsMvc.Interfaces;
 using MeepProductsMvc.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 
 namespace MeepProductsMvc.Controllers
 {
@@ -12,7 +15,7 @@ namespace MeepProductsMvc.Controllers
         {
             _produtoService = produtoService;
         }
-
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<ProdutoViewModel>>> Index()
         {
             var result = await _produtoService.GetProdutos();
@@ -23,26 +26,24 @@ namespace MeepProductsMvc.Controllers
             }
             return View(result);
         }
-        public async Task<ActionResult<ProdutoOmie>> CriarProduto([FromBody] ProdutoOmie produtoOmie )
-        {
-            var result = await _produtoService.PostOmie(produtoOmie);
 
-            if (result is null)
-            {
-                return View("Error");
-            }
-            return View(result);
+        [HttpGet]
+        public IActionResult CriarProduto()
+        { 
+            return View();
         }
-
-        public async Task<ActionResult<IEnumerable<ProdutoViewModel>>> EnviarOmie()
+        [HttpPost]
+        public async Task<ActionResult<ProdutoOmie>> CriarProduto(ProdutoOmie produtoOmie)
         {
-            var result = await _produtoService.PostProdutosEmOutraApi();
+            if (ModelState.IsValid)
+            {
+                var result = await _produtoService.PostOmie(produtoOmie);
 
-            if(result is null)
-            { 
-                return View("Error"); 
+                if (result != null)
+                    return RedirectToAction(nameof(Index));
             }
-            return View(result);
+                ViewBag.Erro = "Erro ao criar o produto";
+                return View(produtoOmie);  
         }
     }
 }

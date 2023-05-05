@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "qsLxDbWpzMVOgM9mQ6JAWsnpm9y3r7WbNAZSWuwyh3czaTItbT0+mvCspzCY7uZWeh+GsD2eCh9mt3h/sRcWJg==",
+  "dgSpecHash": "Oyey1W3EV8i56k0E0bXYLoD+n8pE0UkKNSoUwj9wiaijqDkMQwLlXLAGC5ReOoigXRr5xtBbD/JAkTr3wGVMmQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\raul.souza\\Documents\\Projetos\\MeepProductsMvc\\MeepProductsMvc\\MeepProductsMvc.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\raul.souza\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

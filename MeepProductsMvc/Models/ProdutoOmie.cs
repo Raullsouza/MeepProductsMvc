@@ -1,12 +1,21 @@
-﻿namespace MeepProductsMvc.Models
+﻿
+
+namespace MeepProductsMvc.Models
 {
     public class ProdutoOmie
     {
-        public int Id { get; set; }
-        public string? Codigo_produto_integracao { get; set; }
-        public string? Codigo { get; set; }
-        public string? Descricao { get; set; }
-        public string? Unidade { get; set; }
-        public string? Ncm { get; set; }
+        public string call { get; set; }
+        public string app_key { get; set; }
+        public string app_secret { get; set; }
+        public Param[] param { get; set; }
+
+    }
+    public class Param
+    {
+        public string codigo_produto_integracao { get; set; }
+        public string codigo { get; set; }
+        public string descricao { get; set; }
+        public string unidade { get; set; }
+        public string ncm { get; set; }
     }
 }

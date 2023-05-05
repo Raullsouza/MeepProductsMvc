@@ -9,7 +9,6 @@ namespace MeepProductsMvc.Interfaces
         Task<ProdutoViewModel> CriaProduto(ProdutoViewModel produtoVM);
         Task<bool> AtualizaProduto(int id, ProdutoViewModel produtoVM);
         Task<bool> DeletaProduto(int id);
-        Task<IEnumerable<ProdutoViewModel>> PostProdutosEmOutraApi();
         Task<ProdutoOmie> PostOmie(ProdutoOmie produtoOmie);
     }
 }
