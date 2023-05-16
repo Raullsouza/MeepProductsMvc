@@ -1,9 +1,6 @@
 ﻿using MeepProductsMvc.Interfaces;
 using MeepProductsMvc.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
 
 namespace MeepProductsMvc.Controllers
 {
@@ -15,11 +12,12 @@ namespace MeepProductsMvc.Controllers
         {
             _produtoService = produtoService;
         }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProdutoViewModel>>> Index()
         {
             var result = await _produtoService.GetProdutos();
-            
+
             if (result is null)
             {
                 return View("Error");
@@ -27,23 +25,38 @@ namespace MeepProductsMvc.Controllers
             return View(result);
         }
 
-        [HttpGet]
-        public IActionResult CriarProduto()
-        { 
-            return View();
-        }
-        [HttpPost]
+        [HttpGet("CriarProduto")]
+          public IActionResult CriarProduto(ProdutosOmieTeste produtosOmieTeste) 
+          { 
+              return View();
+          }
+     /*  
+        [HttpPost("CriarProduto")]
         public async Task<ActionResult<ProdutoOmie>> CriarProduto(ProdutoOmie produtoOmie)
         {
             if (ModelState.IsValid)
             {
-                var result = await _produtoService.PostOmie(produtoOmie);
+                var result = await _produtoService.PostOmieTeste();
 
                 if (result != null)
                     return RedirectToAction(nameof(Index));
             }
-                ViewBag.Erro = "Erro ao criar o produto";
-                return View(produtoOmie);  
+            ViewBag.Erro = "Erro ao criar o produto";
+            return View();
+        }
+     */
+        [HttpPost("CriarProduto")]
+        public async Task<ActionResult<ProdutosOmieTeste>> CriarProduto()
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _produtoService.PostOmieTeste();
+
+                if (result != null)
+                    return RedirectToAction(nameof(Index));
+            }
+            ViewBag.Erro = "Erro ao criar o produto";
+            return View();
         }
     }
 }

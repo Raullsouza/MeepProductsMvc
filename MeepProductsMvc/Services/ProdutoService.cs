@@ -1,9 +1,9 @@
-﻿using MeepProductsMvc.Interfaces;
+﻿using MeepProductsMvc.Exceptions;
+using MeepProductsMvc.Interfaces;
 using MeepProductsMvc.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Text;
-using System.Text.Json;
 
 namespace MeepProductsMvc.Services
 {
@@ -11,132 +11,99 @@ namespace MeepProductsMvc.Services
     {
         private const string apiEndpointMeep = "produto/";
         private const string apiEndpointOmie = "produtos/";
-        private readonly JsonSerializerOptions _options;
         private readonly IHttpClientFactory _clientFactory;
+        //private ProdutoViewModel produtoVM;
 
-        private ProdutoViewModel produtoVM;
-        private IEnumerable<ProdutoViewModel> produtosVM;
-
-        public ProdutoService( IHttpClientFactory clientFactory)
+        public ProdutoService(IHttpClientFactory clientFactory)
         {
-            _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             _clientFactory = clientFactory;
         }
 
         public async Task<IEnumerable<ProdutoViewModel>> GetProdutos()
+                {
+                    var client = _clientFactory.CreateClient("MeepProducts");
+                    HttpResponseMessage response = await client.GetAsync(apiEndpointMeep);
+                    {
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var apiResponse = await response.Content.ReadAsStringAsync();
+                            var produtosVM = JsonConvert.DeserializeObject<IEnumerable<ProdutoViewModel>>(apiResponse);
+                            return produtosVM;
+                }
+                        else
+                        {
+                            return null;
+                        }             
+                    }
+                }
+        
+
+        /*         public async Task<ProdutoOmie> PostOmie(ProdutoOmie produtoOmie)
+                 {
+                     var client = _clientFactory.CreateClient("OmieProducts");
+                     client.DefaultRequestHeaders.Accept.Clear();    
+                     client.DefaultRequestHeaders.Add("accept", "* /*");
+                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                     var produto = JsonSerializer.Serialize(produtoOmie);
+                     StringContent content = new(produto, Encoding.UTF8, "application/json");
+
+                     HttpResponseMessage response = await client.PostAsync(apiEndpointOmie, content);
+                     {
+                         if (response.IsSuccessStatusCode)
+                         {
+                             var responseBody = await response.Content.ReadAsStreamAsync();
+                             var apiResponse = await JsonSerializer.DeserializeAsync<ProdutoOmie>(responseBody, _options);
+                         }
+                         else
+                         {
+                             var errorMessage = await response.Content.ReadAsStringAsync();
+                             throw new OmieException(response, errorMessage);
+                         }
+                         return produtoOmie;
+                     }
+                 }
+             */
+
+        public async Task<ParamObject> PostOmieTeste()
         {
-            var client = _clientFactory.CreateClient("MeepProducts");
-            HttpResponseMessage response = await client.GetAsync(apiEndpointMeep);
+            var produto = new
             {
-                if( response.IsSuccessStatusCode )
-                {
-                    var apiResponse = await response.Content.ReadAsStreamAsync();
-                    produtosVM = await JsonSerializer.DeserializeAsync<IEnumerable<ProdutoViewModel>>(apiResponse, _options);
-                }
-                else
-                {
-                    return null;
-                }
-                return produtosVM;
-            }
-        }
-     
-        public async Task<ProdutoViewModel> GetProdutoById(int id)
-        {
-            var client = _clientFactory.CreateClient("MeepProducts");
-            HttpResponseMessage response = await client.GetAsync(apiEndpointMeep + id);
+                codigo_produto_integracao = "41ecferfrfgsdddf41",
+                codigo = "4feferdssggegdess1",
+                descricao = "Uncffdsfgsegtgrfdhda",
+                unidade = "UN",
+                ncm = "22011000"
+            };
+
+            var produtosOmieTeste = new
             {
-                if (response.IsSuccessStatusCode)
-                {
-                    var apiResponse = await response.Content.ReadAsStreamAsync();
-                    produtoVM = await JsonSerializer.DeserializeAsync<ProdutoViewModel>(apiResponse, _options);
-                }
-                else
-                {
-                    return null;
-                }
-                return produtoVM;
-            }
-        }
-         
-        public async Task<ProdutoOmie> PostOmie(ProdutoOmie produtoOmie)
-        {
+                call = "IncluirProduto",
+                app_key = "3436924896405",
+                app_secret = "8d892811de34ad5a88034734467c74d6",
+                param = new[] { produto }
+            };
+
             var client = _clientFactory.CreateClient("OmieProducts");
-            var produto = JsonSerializer.Serialize(produtoOmie);          
-            StringContent content = new StringContent(produto, Encoding.UTF8, "application/json");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Add("accept", "*/*");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var json = JsonConvert.SerializeObject(produtosOmieTeste);
 
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await client.PostAsJsonAsync(apiEndpointOmie, content);
 
-            HttpResponseMessage response = await client.PostAsync(apiEndpointOmie, content);
+             if (response.IsSuccessStatusCode)
             {
-                if (response.IsSuccessStatusCode)
-                {
-                    var apiResponse = await response.Content.ReadAsStreamAsync();
-                    produtoOmie = await JsonSerializer
-                          .DeserializeAsync<ProdutoOmie>
-                          (apiResponse, _options);
-                }
-                else
-                {
-                    return null;
-                }
-                return produtoOmie;
+                var responseBody = await response.Content.ReadAsStringAsync();
+                var apiResponse = JsonConvert.DeserializeObject<ParamObject>(responseBody);
+                return apiResponse;
             }
-            
-        }
-
-        public async Task<ProdutoViewModel?> CriaProduto(ProdutoViewModel produtoVM)
-        {
-            var client = _clientFactory.CreateClient("MeepProducts");
-            var produto = JsonSerializer.Serialize(produtoVM);
-            StringContent content = new(produto, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await client.PostAsync(apiEndpointMeep, content);
+            else
             {
-                if (response.IsSuccessStatusCode)
-                {
-                    var apiResponse = await response.Content.ReadAsStreamAsync();
-                    produtoVM = await JsonSerializer
-                        .DeserializeAsync<ProdutoViewModel>
-                        (apiResponse, _options);
-                }
-                else
-                {
-                    return null;
-                }
-                return produtoVM;
+                  var errorMessage = await response.Content.ReadAsStringAsync();
+                   throw new OmieException(response, errorMessage);     
             }
-        }
-
-        public async Task<bool> AtualizaProduto(int id, ProdutoViewModel produtoVM)
-        {
-            var client = _clientFactory.CreateClient("MeepProducts");
-            HttpResponseMessage response = await client.PutAsJsonAsync(apiEndpointMeep + id, produtoVM);
-            {
-                if (response.IsSuccessStatusCode)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-
-        public async Task<bool> DeletaProduto(int id)
-        {
-            var client = _clientFactory.CreateClient("MeepProducts");
-            HttpResponseMessage response = await client.DeleteAsync(apiEndpointMeep + id);
-            {
-                if (response.IsSuccessStatusCode)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-
+        }   
     }
 }
