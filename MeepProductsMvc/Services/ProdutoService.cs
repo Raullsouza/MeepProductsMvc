@@ -2,22 +2,22 @@
 using MeepProductsMvc.Interfaces;
 using MeepProductsMvc.Models;
 using Newtonsoft.Json;
-using System.Net.Http.Headers;
-using System.Text;
+using RestSharp;
+
 
 namespace MeepProductsMvc.Services
 {
     public class ProdutoService : IProdutoService
     {
         private const string apiEndpointMeep = "produto/";
-        private const string apiEndpointOmie = "produtos/";
+        private const string apiEndpointOmie = "https://app.omie.com.br/api/v1/geral/";
         private readonly IHttpClientFactory _clientFactory;
-        //private ProdutoViewModel produtoVM;
 
         public ProdutoService(IHttpClientFactory clientFactory)
         {
             _clientFactory = clientFactory;
         }
+        
 
         public async Task<IEnumerable<ProdutoViewModel>> GetProdutos()
                 {
@@ -36,8 +36,6 @@ namespace MeepProductsMvc.Services
                         }             
                     }
                 }
-        
-
         /*         public async Task<ProdutoOmie> PostOmie(ProdutoOmie produtoOmie)
                  {
                      var client = _clientFactory.CreateClient("OmieProducts");
@@ -65,13 +63,16 @@ namespace MeepProductsMvc.Services
                  }
              */
 
-        public async Task<ParamObject> PostOmieTeste()
+
+        public async Task<ProdutosOmieTeste> PostOmieTeste()
         {
+            var cliente = new RestClient("https://app.omie.com.br/api/v1/geral/");
+
             var produto = new
             {
-                codigo_produto_integracao = "41ecferfrfgsdddf41",
-                codigo = "4feferdssggegdess1",
-                descricao = "Uncffdsfgsegtgrfdhda",
+                codigo_produto_integracao = "Bolsa",
+                codigo = "bolsaNumero1",
+                descricao = "PrimeiroProdutoIntegração",
                 unidade = "UN",
                 ncm = "22011000"
             };
@@ -79,31 +80,31 @@ namespace MeepProductsMvc.Services
             var produtosOmieTeste = new
             {
                 call = "IncluirProduto",
-                app_key = "3436924896405",
-                app_secret = "8d892811de34ad5a88034734467c74d6",
+                app_key = "3462853537143",
+                app_secret = "fdac8f5ec5ae5643fd6ad01e5bc04b5c",
                 param = new[] { produto }
             };
 
-            var client = _clientFactory.CreateClient("OmieProducts");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Add("accept", "*/*");
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            var json = JsonConvert.SerializeObject(produtosOmieTeste);
+            var request = new RestRequest("produtos/", Method.Post);
 
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsJsonAsync(apiEndpointOmie, content);
+            request.AddHeader("Content-Type", "application/json");
+            //request.AddParameter("Host", cliente.BaseUrl.Host, ParameterType.HttpHeader);
+            request.AddJsonBody(produtosOmieTeste);
 
-             if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var apiResponse = JsonConvert.DeserializeObject<ParamObject>(responseBody);
-                return apiResponse;
-            }
-            else
-            {
-                  var errorMessage = await response.Content.ReadAsStringAsync();
-                   throw new OmieException(response, errorMessage);     
-            }
-        }   
+            var response = await cliente.ExecuteAsync(request);
+
+            var content = response.Content;
+
+            Console.WriteLine(response.StatusCode);
+
+            return null;
+        }
+
+
+
+
     }
+
 }
+
+

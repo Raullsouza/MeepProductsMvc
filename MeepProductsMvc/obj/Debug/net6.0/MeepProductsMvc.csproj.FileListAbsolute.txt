@@ -31,3 +31,7 @@ C:\Users\raul.souza\Documents\Projetos\MeepProductsMvc\MeepProductsMvc\obj\Debug
 C:\Users\raul.souza\Documents\Projetos\MeepProductsMvc\MeepProductsMvc\obj\Debug\net6.0\ref\MeepProductsMvc.dll
 C:\Users\raul.souza\Documents\Projetos\MeepProductsMvc\MeepProductsMvc\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Users\raul.souza\Documents\Projetos\MeepProductsMvc\MeepProductsMvc\obj\Debug\net6.0\MeepProductsMvc.csproj.CopyComplete
+C:\Users\raul.souza\Documents\Projetos\MeepProductsMvc\MeepProductsMvc\bin\Debug\net6.0\RestSharp.dll
+C:\Users\raul.souza\Documents\Projetos\MeepProductsMvc\MeepProductsMvc\bin\Debug\net6.0\System.Text.Encodings.Web.dll
+C:\Users\raul.souza\Documents\Projetos\MeepProductsMvc\MeepProductsMvc\bin\Debug\net6.0\System.Text.Json.dll
+C:\Users\raul.souza\Documents\Projetos\MeepProductsMvc\MeepProductsMvc\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll

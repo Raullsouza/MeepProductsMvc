@@ -6,6 +6,6 @@ namespace MeepProductsMvc.Interfaces
     {
         // Task<ProdutoOmie> PostOmie(ProdutoOmie produtoOmie);
         Task<IEnumerable<ProdutoViewModel>> GetProdutos();
-        Task<ParamObject> PostOmieTeste();
+        Task<ProdutosOmieTeste> PostOmieTeste();
     }
 }
