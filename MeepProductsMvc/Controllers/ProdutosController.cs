@@ -1,4 +1,5 @@
-﻿using MeepProductsMvc.Interfaces;
+﻿using MeepProductsMvc.Exceptions;
+using MeepProductsMvc.Interfaces;
 using MeepProductsMvc.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,31 +27,31 @@ namespace MeepProductsMvc.Controllers
         }
 
         [HttpGet("CriarProduto")]
-          public IActionResult CriarProduto(ProdutosOmieTeste produtosOmieTeste) 
+          public IActionResult CriarProduto() 
           { 
               return View();
           }
-     /*  
-        [HttpPost("CriarProduto")]
-        public async Task<ActionResult<ProdutoOmie>> CriarProduto(ProdutoOmie produtoOmie)
-        {
-            if (ModelState.IsValid)
-            {
-                var result = await _produtoService.PostOmieTeste();
+        /*  
+           [HttpPost("CriarProduto")]
+           public async Task<ActionResult<ProdutoOmie>> CriarProduto(ProdutoOmie produtoOmie)
+           {
+               if (ModelState.IsValid)
+               {
+                   var result = await _produtoService.PostOmieTeste();
 
-                if (result != null)
-                    return RedirectToAction(nameof(Index));
-            }
-            ViewBag.Erro = "Erro ao criar o produto";
-            return View();
-        }
-     */
+                   if (result != null)
+                       return RedirectToAction(nameof(Index));
+               }
+               ViewBag.Erro = "Erro ao criar o produto";
+               return View();
+           }
+        */
         [HttpPost("CriarProduto")]
-        public async Task<ActionResult<ProdutosOmieTeste>> CriarProduto()
+        public async Task<ActionResult<ProdutosOmieTeste>> CriarProduto(ProdutosOmieTeste produtosOmieTeste)
         {
             if (ModelState.IsValid)
             {
-                var result = await _produtoService.PostOmieTeste();
+                var result = await _produtoService.PostOmieTeste(produtosOmieTeste);
 
                 if (result != null)
                     return RedirectToAction(nameof(Index));

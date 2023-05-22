@@ -1,11 +1,11 @@
-﻿@model MeepProductsMvc.Models.ProdutoOmie
+﻿@model MeepProductsMvc.Models.ProdutosOmieTeste
 
 <h2>Criar um Produto</h2>
 
 <form asp-action="CriarProduto">
     <div class="form-horizontal">
         <hr />
-        @*
+        
         <div class="form-group">
             <label asp-for="Call" class="col-md-2 control-label"></label>
             <div class="col-md-10">
@@ -13,55 +13,55 @@
                 <span asp-validation-for="Call" class="text-danger"></span>
             </div>
         <div class="form-group">
-            <label asp-for="AppKey" class="col-md-2 control-label"></label>
+                <label asp-for="App_key" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="AppKey" class="form-control" />
-                <span asp-validation-for="AppKey" class="text-danger"></span>
+                    <input asp-for="App_key" class="form-control" />
+                    <span asp-validation-for="App_key" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="AppSecret" class="col-md-2 control-label"></label>
+                <label asp-for="App_secret" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="AppSecret" class="form-control" />
-                <span asp-validation-for="AppSecret" class="text-danger"></span>
+                    <input asp-for="App_secret" class="form-control" />
+                    <span asp-validation-for="App_secret" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
-                <label asp-for="Param[0].CodigoProdutoIntegracao" class="col-md-2 control-label"></label>
+                <label asp-for="Param.Codigo_produto_integracao" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                    <input asp-for="Param[0].CodigoProdutoIntegracao" class="form-control" />
-                    <span asp-validation-for="Param[0].CodigoProdutoIntegracao" class="text-danger"></span>
+                    <input asp-for="Param.Codigo_produto_integracao" class="form-control" />
+                    <span asp-validation-for="Param.Codigo_produto_integracao" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="Param[0].Codigo" class="col-md-2 control-label"></label>
+            <label asp-for="Param.Codigo" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                    <input asp-for="Param[0].Codigo" class="form-control" />
-                    <span asp-validation-for="Param[0].Codigo" class="text-danger"></span>
+                    <input asp-for="Param.Codigo" class="form-control" />
+                    <span asp-validation-for="Param.Codigo" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="Param[0].Descricao" class="col-md-2 control-label"></label>
+            <label asp-for="Param.Descricao" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                    <input asp-for="Param[0].Descricao" class="form-control" />
-                    <span asp-validation-for="Param[0].Descricao" class="text-danger"></span>
+                    <input asp-for="Param.Descricao" class="form-control" />
+                    <span asp-validation-for="Param.Descricao" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="Param[0].Unidade" class="col-md-2 control-label"></label>
+            <label asp-for="Param.Unidade" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                    <input asp-for="Param[0].Unidade" class="form-control" />
-                    <span asp-validation-for="Param[0].Unidade" class="text-danger"></span>
+                    <input asp-for="Param.Unidade" class="form-control" />
+                    <span asp-validation-for="Param.Unidade" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="Param[0].Ncm" class="col-md-2 control-label"></label>
+            <label asp-for="Param.Ncm" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                    <input asp-for="Param[0].Ncm" class="form-control" />
-                    <span asp-validation-for="Param[0].Ncm" class="text-danger"></span>
+                    <input asp-for="Param.Ncm" class="form-control" />
+                    <span asp-validation-for="Param.Ncm" class="text-danger"></span>
             </div>
         </div>
-        *@
+        
         <div class="form-group" style="padding-top: 10px">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Criar" class="btn btn-success" />

@@ -1,4 +1,5 @@
 ﻿using MeepProductsMvc.Models;
+using System.Collections;
 
 namespace MeepProductsMvc.Interfaces
 {
@@ -6,6 +7,6 @@ namespace MeepProductsMvc.Interfaces
     {
         // Task<ProdutoOmie> PostOmie(ProdutoOmie produtoOmie);
         Task<IEnumerable<ProdutoViewModel>> GetProdutos();
-        Task<ProdutosOmieTeste> PostOmieTeste();
+        Task<ProdutosOmieTeste> PostOmieTeste(ProdutosOmieTeste produtosOmieTeste);
     }
 }

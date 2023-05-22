@@ -3,7 +3,8 @@ using MeepProductsMvc.Interfaces;
 using MeepProductsMvc.Models;
 using Newtonsoft.Json;
 using RestSharp;
-
+using System.Collections;
+using System.Net;
 
 namespace MeepProductsMvc.Services
 {
@@ -17,79 +18,52 @@ namespace MeepProductsMvc.Services
         {
             _clientFactory = clientFactory;
         }
-        
+
 
         public async Task<IEnumerable<ProdutoViewModel>> GetProdutos()
+        {
+            var client = _clientFactory.CreateClient("MeepProducts");
+            HttpResponseMessage response = await client.GetAsync(apiEndpointMeep);
+            {
+                if (response.IsSuccessStatusCode)
                 {
-                    var client = _clientFactory.CreateClient("MeepProducts");
-                    HttpResponseMessage response = await client.GetAsync(apiEndpointMeep);
-                    {
-                        if (response.IsSuccessStatusCode)
-                        {
-                            var apiResponse = await response.Content.ReadAsStringAsync();
-                            var produtosVM = JsonConvert.DeserializeObject<IEnumerable<ProdutoViewModel>>(apiResponse);
-                            return produtosVM;
+                    var apiResponse = await response.Content.ReadAsStringAsync();
+                    var produtosVM = JsonConvert.DeserializeObject<IEnumerable<ProdutoViewModel>>(apiResponse);
+                    return produtosVM;
                 }
-                        else
-                        {
-                            return null;
-                        }             
-                    }
+                else
+                {
+                    return null;
                 }
-        /*         public async Task<ProdutoOmie> PostOmie(ProdutoOmie produtoOmie)
-                 {
-                     var client = _clientFactory.CreateClient("OmieProducts");
-                     client.DefaultRequestHeaders.Accept.Clear();    
-                     client.DefaultRequestHeaders.Add("accept", "* /*");
-                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            }
+        }
 
-                     var produto = JsonSerializer.Serialize(produtoOmie);
-                     StringContent content = new(produto, Encoding.UTF8, "application/json");
-
-                     HttpResponseMessage response = await client.PostAsync(apiEndpointOmie, content);
-                     {
-                         if (response.IsSuccessStatusCode)
-                         {
-                             var responseBody = await response.Content.ReadAsStreamAsync();
-                             var apiResponse = await JsonSerializer.DeserializeAsync<ProdutoOmie>(responseBody, _options);
-                         }
-                         else
-                         {
-                             var errorMessage = await response.Content.ReadAsStringAsync();
-                             throw new OmieException(response, errorMessage);
-                         }
-                         return produtoOmie;
-                     }
-                 }
-             */
-
-
-        public async Task<ProdutosOmieTeste> PostOmieTeste()
+        public async Task<ProdutosOmieTeste> PostOmieTeste(ProdutosOmieTeste produtosOmieTeste)
         {
             var cliente = new RestClient("https://app.omie.com.br/api/v1/geral/");
+            
+                        var param = new
+                        {
+                            codigo_produto_integracao = produtosOmieTeste.Param.Codigo_produto_integracao,
+                            codigo = produtosOmieTeste.Param.Codigo,
+                            descricao = produtosOmieTeste.Param.Descricao,
+                            unidade = produtosOmieTeste.Param.Unidade,
+                            ncm = produtosOmieTeste.Param.Ncm
+                        };
 
-            var produto = new
-            {
-                codigo_produto_integracao = "Bolsa",
-                codigo = "bolsaNumero1",
-                descricao = "PrimeiroProdutoIntegração",
-                unidade = "UN",
-                ncm = "22011000"
-            };
-
-            var produtosOmieTeste = new
-            {
-                call = "IncluirProduto",
-                app_key = "3462853537143",
-                app_secret = "fdac8f5ec5ae5643fd6ad01e5bc04b5c",
-                param = new[] { produto }
-            };
-
+                        var produto = new
+                        {
+                            call = produtosOmieTeste.Call,
+                            app_key = produtosOmieTeste.App_key,
+                            app_secret = produtosOmieTeste.App_secret,
+                            param = new[] { param }
+                        };
+            
             var request = new RestRequest("produtos/", Method.Post);
 
             request.AddHeader("Content-Type", "application/json");
             //request.AddParameter("Host", cliente.BaseUrl.Host, ParameterType.HttpHeader);
-            request.AddJsonBody(produtosOmieTeste);
+            request.AddJsonBody(produto);
 
             var response = await cliente.ExecuteAsync(request);
 
@@ -99,12 +73,6 @@ namespace MeepProductsMvc.Services
 
             return null;
         }
-
-
-
-
     }
 
 }
-
-

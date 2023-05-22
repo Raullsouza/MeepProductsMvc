@@ -8,6 +8,10 @@
         {
             Response = response;
         }
+
+        public OmieException(string? message) : base(message)
+        {
+        }
     }
 
 }

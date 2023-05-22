@@ -7,32 +7,32 @@ namespace MeepProductsMvc.Models
     public class ParamObject
     {
         [JsonProperty(PropertyName = "codigo_produto_integracao")]
-        public string? codigo_produto_integracao { get; set; }
+        public string? Codigo_produto_integracao { get; set; }
 
         [JsonProperty(PropertyName = "codigo")]
-        public string? codigo { get; set; }
+        public string? Codigo { get; set; }
 
         [JsonProperty(PropertyName = "descricao")]
-        public string? descricao { get; set; }
+        public string? Descricao { get; set; }
 
         [JsonProperty(PropertyName = "unidade")]
-        public string? unidade { get; set; }
+        public string? Unidade { get; set; }
 
         [JsonProperty(PropertyName = "ncm")]
-        public string? ncm { get; set; }
+        public string? Ncm { get; set; }
     }
     public class ProdutosOmieTeste
     {
         [JsonPropertyName("call")]
-        public string? call { get; set; }
+        public string? Call { get; set; }
 
         [JsonPropertyName("app_key")]
-        public string? authorizationKey { get; set; }
+        public string? App_key { get; set; }
 
         [JsonPropertyName("app_secret")]
-        public string? authorizationSecret { get; set; }
+        public string? App_secret { get; set; }
 
         [JsonPropertyName("param")]
-        public ParamObject? param { get; set; }
+        public ParamObject? Param { get; set; }
     }
 }
