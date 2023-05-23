@@ -13,17 +13,31 @@ namespace MeepProductsMvc.Controllers
         {
             _produtoService = produtoService;
         }
+        /*
+                [HttpGet]
+                public async Task<ActionResult<IEnumerable<ProdutosOmieTeste>>> Index()
+                {
+                    var result = await _produtoService.GetProdutos();
 
+                    if (result is null)
+                    {
+                        return View("Error");
+                    }
+                    return View(result);
+                }
+
+        */
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProdutoViewModel>>> Index()
+        public async Task<ActionResult<IEnumerable<ListarProdutosOmie>>> Index()
         {
-            var result = await _produtoService.GetProdutos();
+            var result = await _produtoService.ListarProdutos();
+            var responseContent = result.produto_servico_resumido[0];
 
             if (result is null)
             {
                 return View("Error");
             }
-            return View(result);
+           return View(result.produto_servico_resumido);
         }
 
         [HttpGet("CriarProduto")]
@@ -31,21 +45,7 @@ namespace MeepProductsMvc.Controllers
           { 
               return View();
           }
-        /*  
-           [HttpPost("CriarProduto")]
-           public async Task<ActionResult<ProdutoOmie>> CriarProduto(ProdutoOmie produtoOmie)
-           {
-               if (ModelState.IsValid)
-               {
-                   var result = await _produtoService.PostOmieTeste();
 
-                   if (result != null)
-                       return RedirectToAction(nameof(Index));
-               }
-               ViewBag.Erro = "Erro ao criar o produto";
-               return View();
-           }
-        */
         [HttpPost("CriarProduto")]
         public async Task<ActionResult<ProdutosOmieTeste>> CriarProduto(ProdutosOmieTeste produtosOmieTeste)
         {
@@ -53,7 +53,7 @@ namespace MeepProductsMvc.Controllers
             {
                 var result = await _produtoService.PostOmieTeste(produtosOmieTeste);
 
-                if (result != null)
+                if (result == null )
                     return RedirectToAction(nameof(Index));
             }
             ViewBag.Erro = "Erro ao criar o produto";

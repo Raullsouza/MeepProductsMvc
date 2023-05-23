@@ -40,23 +40,24 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.codigo)
+                        @Html.DisplayFor(modelItem => item.descricao)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.codigo_produto)
+                        @Html.DisplayFor(modelItem => item.valor_unitario)
                     <td>
-                            @Html.DisplayFor(modelItem => item.descricao)
+                            @Html.DisplayFor(modelItem => item.codigo_produto_integracao)
                     </td>
                     </td>
-                   
+                    @*
                 <td>
-                <a asp-action="AtualizarProduto" asp-route-id="@item.codigo_produto_integracao" title="Editar" class="btn btn-warning">
+                <a asp-action="AtualizarProduto" asp-route-id="@item.Param.Codigo_produto_integracao" title="Editar" class="btn btn-warning">
                 <span class="fas fa-edit"></span>
                 </a>
-                <a asp-action="DeletarProduto" asp-route-id="@item.codigo_produto_integracao" title="Deletar" class="btn btn-danger">
+                <a asp-action="DeletarProduto" asp-route-id="@item.Param.Codigo_produto_integracao" title="Deletar" class="btn btn-danger">
                 <span class="fas fa-trash-alt"></span>
                 </a>
-                </td>          
+                </td>
+                *@
                 </tr>
             }
         </tbody>

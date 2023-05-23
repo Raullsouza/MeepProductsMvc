@@ -20,7 +20,7 @@ namespace MeepProductsMvc.Services
         }
 
 
-        public async Task<IEnumerable<ProdutoViewModel>> GetProdutos()
+        public async Task<IEnumerable<ProdutosOmieTeste>> GetProdutos()
         {
             var client = _clientFactory.CreateClient("MeepProducts");
             HttpResponseMessage response = await client.GetAsync(apiEndpointMeep);
@@ -28,7 +28,7 @@ namespace MeepProductsMvc.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var apiResponse = await response.Content.ReadAsStringAsync();
-                    var produtosVM = JsonConvert.DeserializeObject<IEnumerable<ProdutoViewModel>>(apiResponse);
+                    var produtosVM = JsonConvert.DeserializeObject<IEnumerable<ProdutosOmieTeste>>(apiResponse);
                     return produtosVM;
                 }
                 else
@@ -38,9 +38,47 @@ namespace MeepProductsMvc.Services
             }
         }
 
+        public async Task<ListarResponse> ListarProdutos()
+        {
+            var client = new RestClient(apiEndpointOmie);
+
+            var body = new
+            {
+                pagina = 1,
+                registros_por_pagina = 50,
+                filtrar_apenas_omiepdv = "N"
+            };
+
+            var authorization = new
+            {
+                call = "ListarProdutosResumido",
+                app_key = "3462853537143",
+                app_secret = "fdac8f5ec5ae5643fd6ad01e5bc04b5c",
+                param = new[] { body }
+            };
+
+            var request = new RestRequest("produtos/", Method.Post);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddJsonBody(authorization);
+
+            var response = await client.ExecuteAsync(request);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                var content = response.Content;
+                var responseObject = JsonConvert.DeserializeObject<ListarResponse>(content);
+                return responseObject;
+            }
+            else
+            {
+                throw new OmieException("Erro ao enviar a solicitação para a API Omie.");
+            }
+        }
+
+
         public async Task<ProdutosOmieTeste> PostOmieTeste(ProdutosOmieTeste produtosOmieTeste)
         {
-            var cliente = new RestClient("https://app.omie.com.br/api/v1/geral/");
+            var cliente = new RestClient(apiEndpointOmie);
             
                         var param = new
                         {
@@ -62,16 +100,21 @@ namespace MeepProductsMvc.Services
             var request = new RestRequest("produtos/", Method.Post);
 
             request.AddHeader("Content-Type", "application/json");
-            //request.AddParameter("Host", cliente.BaseUrl.Host, ParameterType.HttpHeader);
+  
             request.AddJsonBody(produto);
 
             var response = await cliente.ExecuteAsync(request);
 
-            var content = response.Content;
-
-            Console.WriteLine(response.StatusCode);
-
-            return null;
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                var content = response.Content;
+                var responseObject = JsonConvert.DeserializeObject<ProdutosOmieTeste>(content);
+                return null;
+            }
+            else
+            {
+                throw new OmieException("Erro ao enviar a solicitação para a API Omie.");
+            }       
         }
     }
 
