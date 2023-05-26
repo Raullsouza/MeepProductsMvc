@@ -64,7 +64,7 @@ namespace MeepProductsMvc.Services
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 var content = response.Content;
-                var responseObject = JsonConvert.DeserializeObject<ListarResponse>(content);
+                var responseObject = JsonConvert.DeserializeObject<ListarResponse>(content);                    
                 return responseObject;
             }
             else
@@ -84,14 +84,15 @@ namespace MeepProductsMvc.Services
                             codigo = produtosOmieTeste.Param.Codigo,
                             descricao = produtosOmieTeste.Param.Descricao,
                             unidade = produtosOmieTeste.Param.Unidade,
-                            ncm = produtosOmieTeste.Param.Ncm
+                            ncm = produtosOmieTeste.Param.Ncm,
+                            valor_unitario = produtosOmieTeste.Param.Valor_unitario
                         };
 
                         var produto = new
                         {
-                            call = produtosOmieTeste.Call,
-                            app_key = produtosOmieTeste.App_key,
-                            app_secret = produtosOmieTeste.App_secret,
+                            call = "IncluirProduto",  //produtosOmieTeste.Call,
+                            app_key = "3481406851923", //produtosOmieTeste.App_key,
+                            app_secret = "d40e166db454acf192c71ab132824307", //produtosOmieTeste.App_secret,
                             param = new[] { param }
                         };
             

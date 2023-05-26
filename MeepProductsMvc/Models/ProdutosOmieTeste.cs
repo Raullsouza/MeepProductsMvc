@@ -20,6 +20,9 @@ namespace MeepProductsMvc.Models
 
         [JsonProperty(PropertyName = "ncm")]
         public string? Ncm { get; set; }
+
+        [JsonProperty(PropertyName = "valor_unitario")]
+        public string? Valor_unitario { get; set; }
     }
     public class ProdutosOmieTeste
     {

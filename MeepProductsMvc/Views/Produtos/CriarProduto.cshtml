@@ -6,7 +6,7 @@
     <div class="form-horizontal">
         <hr />
         
-        <div class="form-group">
+        @* <div class="form-group">
             <label asp-for="Call" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="Call" class="form-control" />
@@ -26,6 +26,7 @@
                     <span asp-validation-for="App_secret" class="text-danger"></span>
             </div>
         </div>
+        *@
         <div class="form-group">
                 <label asp-for="Param.Codigo_produto_integracao" class="col-md-2 control-label"></label>
             <div class="col-md-10">
@@ -60,6 +61,12 @@
                     <input asp-for="Param.Ncm" class="form-control" />
                     <span asp-validation-for="Param.Ncm" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Param.Valor_unitario" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Param.Valor_unitario" class="form-control" />
+                    <span asp-validation-for="Param.Valor_unitario" class="text-danger"></span>
+                </div>
         </div>
         
         <div class="form-group" style="padding-top: 10px">
