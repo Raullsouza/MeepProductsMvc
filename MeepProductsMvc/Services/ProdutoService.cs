@@ -3,7 +3,6 @@ using MeepProductsMvc.Interfaces;
 using MeepProductsMvc.Models;
 using Newtonsoft.Json;
 using RestSharp;
-using System.Collections;
 using System.Net;
 
 namespace MeepProductsMvc.Services
@@ -17,8 +16,7 @@ namespace MeepProductsMvc.Services
         public ProdutoService(IHttpClientFactory clientFactory)
         {
             _clientFactory = clientFactory;
-        }
-
+        } 
 
         public async Task<IEnumerable<ProdutosOmieTeste>> GetProdutos()
         {
@@ -52,8 +50,8 @@ namespace MeepProductsMvc.Services
             var authorization = new
             {
                 call = "ListarProdutosResumido",
-                app_key = "3462853537143",
-                app_secret = "fdac8f5ec5ae5643fd6ad01e5bc04b5c",
+                app_key = "3481406851923",
+                app_secret = "d40e166db454acf192c71ab132824307",
                 param = new[] { body }
             };
 
@@ -76,7 +74,7 @@ namespace MeepProductsMvc.Services
         }
 
 
-        public async Task<ProdutosOmieTeste> PostOmieTeste(ProdutosOmieTeste produtosOmieTeste)
+        public async Task<ProdutosOmieTeste?> PostOmieTeste(ProdutosOmieTeste produtosOmieTeste)
         {
             var cliente = new RestClient(apiEndpointOmie);
             
@@ -107,14 +105,23 @@ namespace MeepProductsMvc.Services
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                var content = response.Content;
-                var responseObject = JsonConvert.DeserializeObject<ProdutosOmieTeste>(content);
+                //var content = response.Content;
+                //var responseObject = JsonConvert.DeserializeObject<ProdutosOmieTeste>(content);
                 return null;
             }
             else
             {
                 throw new OmieException("Erro ao enviar a solicitação para a API Omie.");
             }       
+        }
+
+        public bool UpdateProduto(ProdutosOmieTeste produtosOmieTeste)
+        {
+            throw new NotImplementedException();
+        }
+        public bool DeleteProduto(ProdutosOmieTeste produtosOmieTeste)
+        {
+            throw new NotImplementedException();
         }
     }
 

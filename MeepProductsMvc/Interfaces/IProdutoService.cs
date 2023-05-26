@@ -5,9 +5,10 @@ namespace MeepProductsMvc.Interfaces
 {
     public interface IProdutoService
     {
-        // Task<ProdutoOmie> PostOmie(ProdutoOmie produtoOmie);
         Task<IEnumerable<ProdutosOmieTeste>> GetProdutos();
         Task<ProdutosOmieTeste> PostOmieTeste(ProdutosOmieTeste produtosOmieTeste);
         Task<ListarResponse> ListarProdutos();
+        bool UpdateProduto(ProdutosOmieTeste produtosOmieTeste);
+        bool DeleteProduto(ProdutosOmieTeste produtosOmieTeste);
     }
 }

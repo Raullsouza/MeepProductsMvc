@@ -31,13 +31,13 @@ namespace MeepProductsMvc.Controllers
         public async Task<ActionResult<IEnumerable<ListarProdutosOmie>>> Index()
         {
             var result = await _produtoService.ListarProdutos();
-            var responseContent = result.produto_servico_resumido[0];
+            //var responseContent = result.Produto_servico_resumido[0];
 
             if (result is null)
             {
                 return View("Error");
             }
-           return View(result.produto_servico_resumido);
+           return View(result.Produto_servico_resumido);
         }
 
         [HttpGet("CriarProduto")]

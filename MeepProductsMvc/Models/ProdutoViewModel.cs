@@ -8,10 +8,10 @@ namespace MeepProductsMvc.Models
         public int Id { get; set; }
         public int CategoriaId { get; set; }
         [Required(ErrorMessage = "O nome do produto é obrigatório")]
-        public string Nome { get; set; }
-        public string Descricao { get; set; }
-        public decimal Preco { get; set; }
-        public int ncm { get; set; }
+        public string? Nome { get; set; }
+        public string? Descricao { get; set; }
+        public decimal? Preco { get; set; }
+        public int? Ncm { get; set; }
         public DateTime DataCriacao { get; set; }
     }
 }
